@@ -1,37 +1,36 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
-
-int countChars(string buffer, char x){
-    int count = 0;
-    for(int i = 0; i < buffer.length(); i++)
-        if(buffer[i] == x)
-            count++;
-    return count;
-}
-
-int *parse(string buffer){
-   int arrSize = countChars(buffer, ',') + 1;
-   // The array size is equals to the number of commas + 1
-   int *arr = new int[arrSize]; // Allocate a new array instance.
-   for(int i = 0; i < arrSize; i++){
-        // We need to parse {arrSize} strings into ints.
-        string word = "";
-        
-   }
-
-   return arr;
-}
 
 int main(){
    ifstream inFile;
    inFile.open("test.txt");
    string A, B;
    inFile >> A >> B;
+   int numbers[25];
 
-   int *arrA = parse(A);
-   int *arrB = parse(B);
+   int count = 0;
+   istringstream input(A); 
+   while(getline(input, A, ',')){
+        numbers[count++] = stoi(A);
+   }
+
+   input = istringstream(B);
+   while(getline(input, B, ',')){
+        numbers[count++] = stoi(B);
+   }
+   
+   int split_at = count/2;
+   int *arrA = numbers;
+   int *arrB = numbers + split_at;
+   
+   int ans = 0;
+   for(int i = 0; i < split_at; i++)
+       ans += arrA[i] * arrB[i];
+
+   cout << ans << endl;
 }
 
 
